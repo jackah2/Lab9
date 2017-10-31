@@ -103,8 +103,67 @@ public class Colosseum {
      *         <p>
      */
     public static Pokemon buildPokemon() {
-        Pokemon returnPokemon = null;
-        return returnPokemon;
+        Pokemon poke = null;
+
+        Pokemon.PokemonType type = null;
+        while (type == null) {
+            System.out.println("Select from the following Pokemon types:");
+            System.out.println("1 - Electric Pokemon");
+            System.out.println("2 - Fire Pokemon");
+            System.out.println("3 - Water Pokemon");
+
+            type = Pokemon.PokemonType.getType(myScan.nextInt());
+
+            if (type == null) {
+                System.out.println("Sorry, you must pick either 1, 2, or 3.");
+            }
+        }
+
+        if (type == Pokemon.PokemonType.ELECTRIC) {
+            poke = new ElectricPokemon();
+        }
+        if (type == Pokemon.PokemonType.FIRE) {
+            poke = new FirePokemon();
+        }
+        if (type == Pokemon.PokemonType.WATER) {
+            poke = new WaterPokemon();
+        }
+
+        poke.setPokemonType(type);
+
+        myScan.nextLine();
+
+        System.out.print("Please name your Pokemon: ");
+        poke.setName(myScan.nextLine());
+
+        System.out.print("\nHow many hit points will it have? (1-50): ");
+        int hitPoints = myScan.nextInt();
+        while (hitPoints < 1 || hitPoints > MAX_HIT_POINTS) {
+            System.out.print("\nSorry. Hit points must be between 1 and 50: ");
+            hitPoints = myScan.nextInt();
+        }
+        poke.setHitPoints(hitPoints);
+
+        System.out.println("\nSplit fifty points between attack level and defense level");
+        System.out.print("Enter your attack level (1-49): ");
+        int attack = myScan.nextInt();
+        while (attack < 1 || attack > MAX_HIT_POINTS - 1) {
+            System.out.print("\nSorry. Your attack level must be between 1 and 49: ");
+            attack = myScan.nextInt();
+        }
+        poke.setAttackLevel(attack);
+
+        int posDef = MAX_HIT_POINTS - attack;
+
+        System.out.print("\nEnter your defense level (1-" + posDef + "): ");
+        int defense = myScan.nextInt();
+        while (defense < 1 || defense > posDef) {
+            System.out.print("\nSorry. The defense level must be between 1 and " + posDef + ": ");
+            defense = myScan.nextInt();
+        }
+        poke.setDefenseLevel(defense);
+
+        return poke;
     }
 
     /**
