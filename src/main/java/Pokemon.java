@@ -24,15 +24,45 @@ public class Pokemon {
         /**
          * Electric pokemon.
          */
-        ELECTRIC,
+        ELECTRIC(1),
         /**
          * Fire pokemon.
          */
-        FIRE,
+        FIRE(2),
         /**
          * Water pokemon.
          */
-        WATER
+        WATER(3);
+
+        /** Used for creating Pokemon. */
+        private int id;
+
+        /**
+         * @param pokeID ID of poketype
+         */
+        PokemonType(final int pokeID) {
+            this.id = pokeID;
+        }
+
+        /**
+         * @return ID of poke type
+         */
+        int getID() {
+            return id;
+        }
+
+        /**
+         * @param id id to get type of
+         * @return poke type
+         */
+        static PokemonType getType(final int id) {
+            for (PokemonType type : PokemonType.values()) {
+                if (type.getID() == id) {
+                    return type;
+                }
+            }
+            return null;
+        }
     }
     /**
      * The Pokemon type we are dealing with.
@@ -87,10 +117,27 @@ public class Pokemon {
         final int d20num = 20;
         this.d6 = new Dice(d6num);
         this.d20 = new Dice(d20num);
+        this.pokeType = null;
         this.hitPoints = 0;
         this.attackLevel = 0;
         this.defenseLevel = 0;
         this.name = "";
+    }
+
+    /**
+     * Get the pokemon type of the pokemon.
+     * @return pokeType the pokemon type of the pokemon
+     */
+    public PokemonType getPokemonType() {
+        return pokeType;
+    }
+
+    /**
+     * Set the pokemon type of the pokemon.
+     * @param type The pokemon type of the pokemon
+     */
+    public void setPokemonType(final PokemonType type) {
+        this.pokeType = type;
     }
 
     /**
